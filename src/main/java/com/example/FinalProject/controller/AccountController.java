@@ -59,10 +59,7 @@ public class AccountController {
         return ResponseEntity.ok(account);
     }
 
-    @PatchMapping("/{id}/activate")
-    public ResponseEntity<Account> activateAccount(@PathVariable("id") Long id) {
-        return ResponseEntity.accepted().body(accountService.updateAccountStatus(id));
-    }
+
 
 
     @PostMapping("/{id}/balance-update-by-transaction")
@@ -72,10 +69,5 @@ public class AccountController {
     }
 
 
-    @GetMapping("/")
-    public String getCustomers(final ModelMap modelMap) {
-        List<Account> customerList = accountService.getAllAccounts();
-        modelMap.addAttribute("customerDtoList", customerList);
-        return "index";
-    }
+
 }

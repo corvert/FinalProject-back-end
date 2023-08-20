@@ -23,10 +23,15 @@ public class AccountService {
     private TransactionRepository transactionRepository;
     @Autowired
     private StockRepository stockRepository;
-
-
     @Autowired
     private CurrencyRateRepository currencyRateRepository;
+    @Autowired
+    TransactionService transactionService;
+
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+
+    }
 
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
@@ -48,20 +53,9 @@ public class AccountService {
                 .balance(account.getBalance())
                 .accountName(account.getAccountName())
                 .currency(account.getCurrency())
-                .status(account.getStatus())
                 .build();
     }
 
-
-
-    public Account updateAccountStatus(Long id) {
-        Account account = accountRepository.findById(id).orElse(null);
-        if (account != null) {
-            account.setStatus(true);
-            accountRepository.save(account);
-        }
-        return account;
-    }
 
     public Account updateAccountBalanceByTransactionType(Long id, Transaction transaction) {
 
@@ -71,9 +65,6 @@ public class AccountService {
             total = account.getBalance().add(transaction.getAmount());
             account.setBalance(total);
             transaction.setTransactionType("DEPOSIT");
-
-
-
         } else {
             if (transaction.getAmount().compareTo(account.getBalance()) > 0) {
                 throw new IllegalStateException("Withdrawal amount exceeds account balance");
@@ -83,7 +74,7 @@ public class AccountService {
             transaction.setTransactionType("WITHDRAW");
         }
         transaction.setAmount(transaction.getAmount());
-        transaction.setTransactionDate(LocalDate.now());
+        transaction.setTransactionDate(transaction.getTransactionDate());
         transaction.setAccount(account);//
         account.setId(id);
         transactionRepository.save(transaction);

@@ -30,9 +30,11 @@ public class Stock implements Serializable {
     private BigDecimal totalBuyValue = BigDecimal.ZERO;
     private BigDecimal profitLoss = BigDecimal.ZERO;
     private BigDecimal totalMarketValue = BigDecimal.ZERO;
-    private BigDecimal totalAmountInEur = BigDecimal.ZERO;
+    private BigDecimal totalMarketValueInEur = BigDecimal.ZERO;
 
-    public Stock(String symbol, String stockName, Account account, BigDecimal currentPrice, BigDecimal totalAmount, BigDecimal averagePrice, BigDecimal totalBuyValue, BigDecimal profitLoss, BigDecimal totalMarketValue, BigDecimal totalAmountInEur) {
+    public Stock(String symbol, String stockName, Account account, BigDecimal currentPrice,
+                 BigDecimal totalAmount, BigDecimal averagePrice, BigDecimal totalBuyValue,
+                 BigDecimal profitLoss, BigDecimal totalMarketValue, BigDecimal totalMarketValueInEur) {
         this.symbol = symbol;
         this.stockName = stockName;
         this.account = account;
@@ -42,6 +44,6 @@ public class Stock implements Serializable {
         this.totalBuyValue = totalBuyValue;
         this.profitLoss = profitLoss;
         this.totalMarketValue = totalMarketValue;
-        this.totalAmountInEur = totalAmountInEur;
+        this.totalMarketValueInEur = totalMarketValueInEur;
     }
 }

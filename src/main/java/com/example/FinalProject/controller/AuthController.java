@@ -43,7 +43,7 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
         } catch (Exception ex) {
-            throw new Exception("inavalid username/password");
+            throw new Exception("invalid username/password");
         }
         return jwtUtil.generateToken(authRequest.getUsername());
     }
@@ -55,9 +55,8 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
-        // Create new user's account
-        MyUser user = new MyUser(signUpRequest.getUsername(),
 
+        MyUser user = new MyUser(signUpRequest.getUsername(),
                 encoder.encode(signUpRequest.getPassword()));
 
 
@@ -67,19 +66,6 @@ public class AuthController {
     }
 
 
-//    @RequestMapping("/login")
-//    public boolean login(@RequestBody MyUser user) {
-//        return
-//                user.getUsername().equals("user") && user.getPassword().equals("password");
-//    }
-//
-//    @RequestMapping("/user")
-//    public Principal user(HttpServletRequest request) {
-//        String authToken = request.getHeader("Authorization")
-//                .substring("Basic".length()).trim();
-//        return () ->  new String(Base64.getDecoder()
-//                .decode(authToken)).split(":")[0];
-//    }
 
 
 }

@@ -12,7 +12,8 @@ public class CurrencyRateService {
     @Autowired
     private CurrencyRateRepository currencyRateRepository;
 
-    public List<CurrencyRate> getAllCurrencys() {
+
+    public List<CurrencyRate> getAllCurrencies() {
         return currencyRateRepository.findAll();
     }
 

@@ -1,5 +1,6 @@
 package com.example.FinalProject.controller;
 
+import com.example.FinalProject.exceptions.StockNotFoundExcetion;
 import com.example.FinalProject.model.Account;
 import com.example.FinalProject.model.Dividend;
 import com.example.FinalProject.model.Stock;
@@ -67,7 +68,7 @@ public class StockController {
     }
 
     @PostMapping("/{id}/createTrade")
-    public ResponseEntity<Trade> createTrade(@PathVariable("id") Long stockId, @RequestBody Trade trade) {
+    public ResponseEntity<Trade> createTrade(@PathVariable("id") Long stockId, @RequestBody Trade trade) throws StockNotFoundExcetion {
         Stock stock = stockService.findStockById(stockId);
         Trade savedTrade = tradeService.save(stock, trade);
         return ResponseEntity.ok(savedTrade);

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StockService {
@@ -23,7 +24,10 @@ public class StockService {
     }
 
     public List<Stock> getFullPortfolio() {
-        return stockRepository.findAll();
+        List<Stock> stockList = stockRepository.findAll();
+        return stockList.stream()
+                .sorted((s1, s2) -> s1.getStockName().compareTo(s2.getStockName()))
+                .collect(Collectors.toList());
     }
 
     public Stock findStockById(Long id) {
@@ -60,12 +64,10 @@ public class StockService {
     }
 
     public List<Stock> getStocksListByAccountId(Long id) {
-//        BigDecimal totalProfitLoss = stockRepository.findAllByAccountId(id)
-//                .stream()
-//                .map(Stock::getProfitLoss)
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        return stockRepository.findAllByAccountId(id);
+        List<Stock> stockList = stockRepository.findAllByAccountId(id);
+        return stockList.stream()
+                .sorted((s1, s2) -> s1.getStockName().compareTo(s2.getStockName()))
+                .collect(Collectors.toList());
     }
 
 

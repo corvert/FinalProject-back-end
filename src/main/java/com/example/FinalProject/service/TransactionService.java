@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -17,14 +18,27 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private  AccountService accountService;
+
+    public TransactionService(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+
+    }
 
     public List<Transaction> getFullTransactionList() {
         return transactionRepository.findAll();
     }
 
+
+
     public List<Transaction> getTransactionsListByAccountId(Long accountId) {
-        return transactionRepository.findAllByAccountId(accountId);
+        List<Transaction> transactions = transactionRepository.findAllByAccountId(accountId);
+        return transactions.stream()
+                .sorted((t1, t2) -> t1.getTransactionDate().compareTo(t2.getTransactionDate()))
+                .collect(Collectors.toList());
     }
+
 
     public Transaction save(Transaction transaction) {
         Transaction savedTransaction = toTransaction(transaction);

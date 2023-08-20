@@ -51,20 +51,6 @@ public class StockRepositoryTest {
 
 
     }
-//    @Test
-//    public void testFindStockByAccountId_returnSuccessfully() throws StockNotFoundExcetion{
-//        Account account = new Account(1L, "LHV", BigDecimal.TEN, "EUR", true,
-//                BigDecimal.ZERO, BigDecimal.ZERO);
-//        Stock testStock = new Stock( 1L,"MSFT","Microsoft INC",account, BigDecimal.TEN,
-//                BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-//        Stock testStock1 = new Stock( 2L,"MSFT","Microsoft INC",account, BigDecimal.TEN,
-//                BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-//
-//        when(stockRepository.findAllByAccountId(anyLong())).thenReturn((List<Stock>) testStock);
-//        StockService stockService = new StockService(stockRepository);
-//
-//        List<Stock> selectedStock = stockService.getStocksListByAccountId(1L);
-//        assertEquals(1L, selectedStock.get(1));
-//    }
+
 
 }

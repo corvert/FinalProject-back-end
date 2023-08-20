@@ -42,14 +42,5 @@ public class TradeController {
         return ResponseEntity.ok(trade);
     }
 
-//    @PostMapping("/{id}/update-stock-balance-by-trade/")
-//    public ResponseEntity<Trade> updateStockBalanceByTradeType(@PathVariable("id") Long id,
-//                                                               @PathVariable("symbol") String stockSymbol,
-//                                                               @RequestBody Trade trade) {
-//        Trade savedTrade = tradeService.updateStockBalanceByTradeType(id, stockSymbol, trade);
-//        tradeService.save(savedTrade);
-//        return ResponseEntity.ok(savedTrade);
-//    }
-
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DividendService {
@@ -22,7 +23,10 @@ public class DividendService {
     private AccountRepository accountRepository;
 
     public List<Dividend> getFullDividendList() {
-        return dividendRepository.findAll();
+        List<Dividend> dividendList = dividendRepository.findAll();
+        return dividendList.stream().
+                sorted((date1, date2) -> date1.getDate().compareTo(date2.getDate()))
+                .collect(Collectors.toList());
     }
 
     public Dividend save(Dividend dividend) {
@@ -48,7 +52,10 @@ public class DividendService {
     }
 
     public List<Dividend> getDividendListByStockId(Long id) {
-        return dividendRepository.findAllByStockId(id);
+        List<Dividend> dividendList = dividendRepository.findAllByStockId(id);
+        return dividendList.stream().
+                sorted((date1, date2) -> date1.getDate().compareTo(date2.getDate()))
+                .collect(Collectors.toList());
     }
 
     private Account updateAccountBalanceByReceivedDividend(Long id, Dividend dividend) {
