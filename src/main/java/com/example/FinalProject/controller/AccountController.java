@@ -6,7 +6,6 @@ import com.example.FinalProject.service.StockService;
 import com.example.FinalProject.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,8 +57,6 @@ public class AccountController {
         accountService.save(account);
         return ResponseEntity.ok(account);
     }
-
-
 
 
     @PostMapping("/{id}/balance-update-by-transaction")

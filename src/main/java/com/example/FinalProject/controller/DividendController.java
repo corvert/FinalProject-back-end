@@ -1,8 +1,7 @@
 package com.example.FinalProject.controller;
 
-import com.example.FinalProject.model.Account;
+
 import com.example.FinalProject.model.Dividend;
-import com.example.FinalProject.model.Trade;
 import com.example.FinalProject.service.AccountService;
 import com.example.FinalProject.service.DividendService;
 import org.springframework.beans.factory.annotation.Autowired;

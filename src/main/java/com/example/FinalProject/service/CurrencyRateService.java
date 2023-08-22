@@ -5,6 +5,7 @@ import com.example.FinalProject.repository.CurrencyRateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -41,5 +42,10 @@ public class CurrencyRateService {
 
     public CurrencyRate findCurrencyRateByCurrency(String currency) {
         return currencyRateRepository.findByCurrency(currency);
+    }
+
+    public BigDecimal getCurrencyRateForCurrency(String currency) {
+        CurrencyRate currencyRate = currencyRateRepository.findByCurrency(currency);
+        return currencyRate.getRate();
     }
 }

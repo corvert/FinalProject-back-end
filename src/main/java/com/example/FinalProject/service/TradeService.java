@@ -2,6 +2,7 @@ package com.example.FinalProject.service;
 
 import com.example.FinalProject.exceptions.StockNotFoundExcetion;
 import com.example.FinalProject.model.Account;
+import com.example.FinalProject.model.AlphaVantageAPI;
 import com.example.FinalProject.model.Stock;
 import com.example.FinalProject.model.Trade;
 import com.example.FinalProject.repository.AccountRepository;
@@ -26,14 +27,19 @@ public class TradeService {
     private StockRepository stockRepository;
     @Autowired
     private StockService stockService;
+    @Autowired
+    private CurrencyRateService currencyRateService;
+
+    private final AlphaVantageAPI alphaVantageAPI;
 
     public TradeService(TradeRepository tradeRepository, StockService stockService, AccountRepository accountRepository,
-                        StockRepository stockRepository) {
+                        StockRepository stockRepository, AlphaVantageAPI alphaVantageAPI) {
         this.tradeRepository = tradeRepository;
         this.stockService = stockService;
         this.accountRepository = accountRepository;
         this.stockRepository = stockRepository;
-      ;
+        this.alphaVantageAPI = alphaVantageAPI;
+
     }
 
     public List<Trade> getFullTradeList() {
@@ -51,11 +57,16 @@ public class TradeService {
     public Trade save(Stock stock, Trade trade) throws StockNotFoundExcetion {
         trade.setStock(stock);
         updateStockBalanceByTradeType(stock.getAccount().getId(), stock.getId(), trade);
+        BigDecimal currencyRate = currencyRateService.getCurrencyRateForCurrency(stock.getAccount().getCurrency());
+        updateTotalMarketValueInEURForStock(stock, currencyRate);
         return tradeRepository.save(trade);
     }
 
     public Trade save(Long accountId, Long stockId, Trade trade) throws StockNotFoundExcetion {
         updateStockBalanceByTradeType(accountId, stockId, trade);
+        Stock stock = stockRepository.findById(stockId).orElseThrow();
+        BigDecimal currencyRate = currencyRateService.getCurrencyRateForCurrency(stock.getAccount().getCurrency());
+        updateTotalMarketValueInEURForStock(stock, currencyRate);
         return tradeRepository.save(trade);
     }
 
@@ -81,7 +92,8 @@ public class TradeService {
     }
 
     private Trade updateStockBalanceByTradeType(Long accountId, Long stockId, Trade trade) throws StockNotFoundExcetion {
-        Account account = accountRepository.findById(accountId).orElseThrow(()-> new StockNotFoundExcetion("Stock not found " + stockId, 1));
+        Account account = accountRepository.findById(accountId).orElseThrow(()->
+                new StockNotFoundExcetion("Stock not found " + stockId, 1));
         Stock stock = stockRepository.findById(stockId).orElseThrow();
         BigDecimal totalStockAmount;
 
@@ -101,7 +113,7 @@ public class TradeService {
         newTrade.setComment(trade.getComment());
         newTrade.setTradeSum(trade.getTradeSum());
 
-        stockCalculation(stockId, trade, account, stock, totalStockAmount);
+        stockCalculation(stockId, trade, account, stock, totalStockAmount, alphaVantageAPI);
 
         return trade;
     }
@@ -133,11 +145,21 @@ public class TradeService {
         return totalStockAmount;
     }
 
-    private static void stockCalculation(Long stockId, Trade trade, Account account, Stock stock, BigDecimal totalStockAmount) {
+    private static void stockCalculation(Long stockId, Trade trade, Account account, Stock stock, BigDecimal totalStockAmount, AlphaVantageAPI alphaVantageAPI) {
         stock.setTotalAmount(totalStockAmount);
         stock.setAccount(account);
         stock.setId(stockId);
-        stock.setCurrentPrice(trade.getUnitPrice());//
+
+        BigDecimal currentPrice;
+        try {
+            currentPrice = BigDecimal.valueOf(alphaVantageAPI.getStockPrice(trade.getStock().getSymbol()));
+        } catch (Exception e) {
+            System.out.println("Stock not found");
+            currentPrice = trade.getUnitPrice();
+        }
+
+        stock.setCurrentPrice(currentPrice);
+
         stock.setProfitLoss(stock.getCurrentPrice().multiply(stock.getTotalAmount()).subtract(stock.getTotalBuyValue()));
         if (totalStockAmount.compareTo(BigDecimal.ZERO) == 0) {
             stock.setAveragePrice(BigDecimal.ZERO);
@@ -150,4 +172,11 @@ public class TradeService {
     public List<Trade> getTradeListByStockId(Long id) {
         return tradeRepository.findAllByStockId(id);
     }
+
+    private void updateTotalMarketValueInEURForStock(Stock stock, BigDecimal currencyRate) {
+        BigDecimal totalMarketValueInEUR = stock.getTotalMarketValue().divide(currencyRate, RoundingMode.HALF_UP);
+        stock.setTotalMarketValueInEur(totalMarketValueInEUR);
+        stockRepository.save(stock);
+    }
+
 }

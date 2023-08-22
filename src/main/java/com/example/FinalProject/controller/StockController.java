@@ -1,7 +1,6 @@
 package com.example.FinalProject.controller;
 
 import com.example.FinalProject.exceptions.StockNotFoundExcetion;
-import com.example.FinalProject.model.Account;
 import com.example.FinalProject.model.Dividend;
 import com.example.FinalProject.model.Stock;
 import com.example.FinalProject.model.Trade;
@@ -9,9 +8,7 @@ import com.example.FinalProject.service.AccountService;
 import com.example.FinalProject.service.DividendService;
 import com.example.FinalProject.service.StockService;
 import com.example.FinalProject.service.TradeService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

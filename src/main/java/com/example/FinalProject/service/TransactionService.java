@@ -1,7 +1,5 @@
 package com.example.FinalProject.service;
 
-import com.example.FinalProject.model.Account;
-import com.example.FinalProject.model.Stock;
 import com.example.FinalProject.model.Transaction;
 import com.example.FinalProject.repository.AccountRepository;
 import com.example.FinalProject.repository.TransactionRepository;

@@ -1,6 +1,7 @@
 package com.example.FinalProject.service;
 
 import com.example.FinalProject.model.Account;
+import com.example.FinalProject.model.MyUser;
 import com.example.FinalProject.model.Transaction;
 import com.example.FinalProject.repository.AccountRepository;
 import com.example.FinalProject.repository.TransactionRepository;
@@ -39,7 +40,7 @@ public class AccountServiceTest {
     @Test
     public void testUpdateAccountBalanceByTransactionType_responseSuccessfully() {
         Account account = new Account(1L, "LHV", BigDecimal.valueOf(10), "EUR",
-                BigDecimal.ZERO);
+                BigDecimal.ZERO, new MyUser());
         Transaction transaction = new Transaction(1L, BigDecimal.valueOf(100), "DEPOSIT", account, LocalDate.now());
         when(accountRepository.findById(account.getId())).thenReturn(Optional.of(account));
 

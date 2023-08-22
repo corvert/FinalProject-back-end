@@ -23,16 +23,14 @@ public class Account implements Serializable {
     private BigDecimal balance = BigDecimal.ZERO;
     private String currency;
     private BigDecimal balanceInEur = BigDecimal.ZERO;
+    @ManyToOne
+    private MyUser myUser;
 
-
-
-
-    public Account(String accountName, BigDecimal balance, String currency,
-                   BigDecimal balanceInEur) {
+    public Account(String accountName, BigDecimal balance, String currency, BigDecimal balanceInEur, MyUser myUser) {
         this.accountName = accountName;
         this.balance = balance;
         this.currency = currency;
         this.balanceInEur = balanceInEur;
-
+        this.myUser = myUser;
     }
 }

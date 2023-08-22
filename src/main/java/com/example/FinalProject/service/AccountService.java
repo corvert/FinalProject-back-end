@@ -1,8 +1,6 @@
 package com.example.FinalProject.service;
 
 import com.example.FinalProject.model.*;
-import com.example.FinalProject.model.enums.TradeType;
-import com.example.FinalProject.model.enums.TransactionType;
 import com.example.FinalProject.repository.AccountRepository;
 import com.example.FinalProject.repository.CurrencyRateRepository;
 import com.example.FinalProject.repository.StockRepository;
@@ -11,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,12 +22,9 @@ public class AccountService {
     private StockRepository stockRepository;
     @Autowired
     private CurrencyRateRepository currencyRateRepository;
-    @Autowired
-    TransactionService transactionService;
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-
     }
 
     public List<Account> getAllAccounts() {

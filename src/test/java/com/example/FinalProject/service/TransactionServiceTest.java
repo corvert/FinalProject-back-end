@@ -1,6 +1,7 @@
 package com.example.FinalProject.service;
 
 import com.example.FinalProject.model.Account;
+import com.example.FinalProject.model.MyUser;
 import com.example.FinalProject.model.Transaction;
 import com.example.FinalProject.repository.AccountRepository;
 import com.example.FinalProject.repository.TransactionRepository;
@@ -32,7 +33,7 @@ public class TransactionServiceTest {
     @Test
     public void getAllTransactions_ResponseSuccessfully(){
         Account account = new Account(1L, "LHV", BigDecimal.TEN, "EUR",
-                BigDecimal.ZERO);
+                BigDecimal.ZERO, new MyUser());
         Transaction transaction1 = new Transaction(BigDecimal.valueOf(100), "DEPOSIT", account, LocalDate.now());
         Transaction transaction2 = new Transaction(BigDecimal.valueOf(200), "DEPOSIT", account, LocalDate.now());
         when(transactionRepository.findAll()).thenReturn(List.of(transaction2, transaction1));
@@ -49,8 +50,9 @@ public class TransactionServiceTest {
     @Test
     public void saveTransactions_ResponseSuccessfully() {
         Account account = new Account(1L, "LHV", BigDecimal.valueOf(10), "EUR",
-                BigDecimal.ZERO);
-        Transaction transaction = new Transaction(1L, BigDecimal.valueOf(100), "DEPOSIT", account, LocalDate.now());
+                BigDecimal.ZERO, new MyUser());
+        Transaction transaction = new Transaction(1L, BigDecimal.valueOf(100), "DEPOSIT",
+                account, LocalDate.now());
 
         TransactionService transactionService = new TransactionService(transactionRepository);
 

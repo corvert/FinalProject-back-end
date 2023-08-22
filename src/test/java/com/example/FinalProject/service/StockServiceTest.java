@@ -2,6 +2,7 @@ package com.example.FinalProject.service;
 
 import com.example.FinalProject.exceptions.StockNotFoundExcetion;
 import com.example.FinalProject.model.Account;
+import com.example.FinalProject.model.MyUser;
 import com.example.FinalProject.model.Stock;
 import com.example.FinalProject.repository.AccountRepository;
 import com.example.FinalProject.repository.StockRepository;
@@ -29,7 +30,7 @@ public class StockServiceTest {
     @Test
     public void testFindStockByAccountId_returnSuccessfully() throws StockNotFoundExcetion {
         Account account = new Account(1L, "LHV", BigDecimal.TEN, "EUR",
-                BigDecimal.ZERO);
+                BigDecimal.ZERO, new MyUser());
         Stock secondStock = new Stock(2L, "AAPL", "Apple Inc.", account, BigDecimal.TEN,
                 BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
         Stock firstStock = new Stock(1L, "MSFT", "Microsoft INC", account, BigDecimal.TEN,

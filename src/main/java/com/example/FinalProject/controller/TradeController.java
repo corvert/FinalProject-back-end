@@ -1,7 +1,6 @@
 package com.example.FinalProject.controller;
 
-import com.example.FinalProject.model.Account;
-import com.example.FinalProject.model.Dividend;
+
 import com.example.FinalProject.model.Stock;
 import com.example.FinalProject.model.Trade;
 import com.example.FinalProject.service.AccountService;
