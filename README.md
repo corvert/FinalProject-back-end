@@ -2,6 +2,7 @@
 Final project repository for JavaRemoteEE26 group 3 for a Stock Tracker Application.
 
 SQL triggers
+
 CREATE DEFINER=`root`@`localhost` TRIGGER `after_insert_total_market_value_in_eur` AFTER INSERT ON `currency_rate` FOR EACH ROW BEGIN
     UPDATE Stock s
     JOIN Account a ON s.account_id = a.id
