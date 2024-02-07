@@ -4,7 +4,7 @@ import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 
 public class AlphaVantageAPI {
-    private String apiKey = "BVBZ6P8VKTUD16IE";
+    private String apiKey = " ";
 
     public void AlphaVantageClient(String apiKey) {
         this.apiKey = apiKey;
